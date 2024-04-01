@@ -1,0 +1,6 @@
+package etl
+
+
+func loadData() {
+
+}
