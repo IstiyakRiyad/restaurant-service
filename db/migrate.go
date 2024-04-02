@@ -72,3 +72,5 @@ func (db *DataBase) MigrateDownDB() error {
 
 	return nil 
 }
+
+
