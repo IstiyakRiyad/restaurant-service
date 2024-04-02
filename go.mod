@@ -3,6 +3,7 @@ module gitlab.com/IstiyakRiyad/technical-assessment-pathao
 go 1.22.0
 
 require (
+	github.com/lib/pq v1.10.9
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
 )

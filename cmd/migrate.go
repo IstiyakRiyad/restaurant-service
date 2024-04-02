@@ -1,6 +1,11 @@
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"log"
+
+	"github.com/spf13/cobra"
+	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/db"
+)
 
 var migrateCmd = &cobra.Command{
 	Use: "migrate",
@@ -30,9 +35,17 @@ func init() {
 
 
 func migrateUpFunc(cmd *cobra.Command, args []string) {
+	_, err := db.NewDatabase()
+	if err != nil {
+		log.Fatal("Connection Error", err)
+	}
 
 }
 
 func migrateDownFunc(cmd *cobra.Command, args []string) {
 
 }
+
+
+
+

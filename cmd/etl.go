@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/etl"
 )
@@ -19,9 +17,10 @@ func init() {
 
 
 func etlFunc(cmd *cobra.Command, args []string) {
+	// Extract the data from json files
 	restaurants, users := etl.ExtractData()
 
-	fmt.Println(restaurants)
-	fmt.Println(users)
+	// Transform the data
+	etl.TransformData(restaurants, users)
 }
 
