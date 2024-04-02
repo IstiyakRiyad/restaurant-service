@@ -38,14 +38,25 @@ func migrateUpFunc(cmd *cobra.Command, args []string) {
 	// Create the database if not exists
 	db.CreateDBIfNotExist()
 
-	_, err := db.NewDatabase()
+	db, err := db.NewDatabase()
 	if err != nil {
 		log.Fatal("Connection Error", err)
+	}
+
+	if err := db.MigrateUpDB(); err != nil {
+		log.Fatal("Could not migrate db: ", err)
 	}
 }
 
 func migrateDownFunc(cmd *cobra.Command, args []string) {
+	db, err := db.NewDatabase()
+	if err != nil {
+		log.Fatal("Connection Error", err)
+	}
 
+	if err := db.MigrateDownDB(); err != nil {
+		log.Fatal("Could not migrate down the db: ", err)
+	}
 }
 
 
