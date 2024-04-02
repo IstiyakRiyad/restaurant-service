@@ -35,11 +35,13 @@ func init() {
 
 
 func migrateUpFunc(cmd *cobra.Command, args []string) {
+	// Create the database if not exists
+	db.CreateDBIfNotExist()
+
 	_, err := db.NewDatabase()
 	if err != nil {
 		log.Fatal("Connection Error", err)
 	}
-
 }
 
 func migrateDownFunc(cmd *cobra.Command, args []string) {
