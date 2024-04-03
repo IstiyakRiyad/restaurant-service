@@ -68,11 +68,11 @@ func NewDatabase() (*DataBase, error) {
 
 	db, err := sql.Open("postgres", conURL)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	if err := db.Ping(); err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	fmt.Println("Database is connected")
