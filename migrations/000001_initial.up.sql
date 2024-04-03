@@ -1,21 +1,21 @@
 -- User
 CREATE TABLE IF NOT EXISTS users (
 	id				serial PRIMARY KEY, 
-	name			varchar(100) NOT NULL, 
+	name			varchar(500) NOT NULL, 
 	cash_balance	decimal(10, 2) DEFAULT 0.0
 );
 
 -- Restaurant
 CREATE TABLE IF NOT EXISTS restaurants (
 	id				serial PRIMARY KEY, 
-	name			varchar(100) NOT NULL, 
+	name			varchar(500) NOT NULL, 
 	cash_balance	decimal(10, 2) DEFAULT 0.0
 );
 
 -- Menu table
 CREATE TABLE IF NOT EXISTS menus (
 	id				serial PRIMARY KEY, 
-	name			varchar(100) NOT NULL, 
+	name			varchar(500) NOT NULL, 
 	price			decimal(10, 2) DEFAULT 0.0,
 	restaurant_id	INT NOT NULL,
 
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS menus (
 -- Opening Hours 
 CREATE TABLE IF NOT EXISTS opening_hours (
 	id				serial PRIMARY KEY, 
-	day				varchar(100) NOT NULL, 
+	day				varchar(500) NOT NULL, 
 	start_time		timestamp(3) NOT NULL, 
 	end_time		timestamp(3) NOT NULL, 
 	restaurant_id	INT NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS opening_hours (
 CREATE TABLE IF NOT EXISTS purchases (
 	id				serial PRIMARY KEY, 
 	amount			decimal(10, 2) DEFAULT 0.0,
-	start_time		timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	purchase_time	timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	restaurant_id	INT NOT NULL,
 	user_id			INT NOT NULL,
 	menu_id			INT NOT NULL,

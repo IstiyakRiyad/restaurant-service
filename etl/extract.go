@@ -6,9 +6,6 @@ import (
 	"os"
 )
 
-var restaurant_with_menu = "restaurantData/restaurant_with_menu.json"
-var users_with_purchase_history = "restaurantData/users_with_purchase_history.json"
-
 type Restaurant struct {
 	Name			string		`json:"restaurantName"`
 	OpeningHours	string		`json:"openingHours"`
@@ -31,8 +28,8 @@ type User struct {
 	}								`json:"purchaseHistory"`
 }
 
-func extractRestaurantData() ([]Restaurant) {
-	file, err := os.Open(restaurant_with_menu)
+func (etl *RestaurantETL) extractRestaurantData() ([]Restaurant) {
+	file, err := os.Open(etl.restaurantFile)
 	if err != nil {
 		log.Fatal("Faild to open restaurant file: ", err)
 	}
@@ -48,8 +45,8 @@ func extractRestaurantData() ([]Restaurant) {
 	return restaurents
 }
 
-func extractUserData() ([]User) {
-	file, err := os.Open(users_with_purchase_history)
+func (etl *RestaurantETL) extractUserData() ([]User) {
+	file, err := os.Open(etl.userFile)
 	if err != nil {
 		log.Fatal("Faild to open users file: ", err)
 	}
@@ -65,9 +62,9 @@ func extractUserData() ([]User) {
 	return users
 }
 
-func ExtractData() ([]Restaurant, []User) {
-	restaurants := extractRestaurantData()
-	users := extractUserData()
+func (etl *RestaurantETL) extractData() ([]Restaurant, []User) {
+	restaurants := etl.extractRestaurantData()
+	users := etl.extractUserData()
 
 	return restaurants, users
 }

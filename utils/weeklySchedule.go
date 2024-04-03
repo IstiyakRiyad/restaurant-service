@@ -83,8 +83,11 @@ func parseWeeks(weekArray []string) ([]string) {
 // 3. ParseWeeks
 func WeeklyScheduleDecoder(scheduleString string) ([]WeeklySchedule) {
 	// Remove the ',' character
-	schedulesWithOutComma := strings.Replace(scheduleString, ",", "", -1)
-	schedules := strings.Split(schedulesWithOutComma, " / ")
+	schedulesFormating := strings.Replace(scheduleString, ",", "", -1)
+	schedulesFormating = strings.Replace(schedulesFormating, " - ", "-", -1)
+	schedulesFormating = strings.Replace(schedulesFormating, "-", " - ", -1)
+	schedulesFormating = strings.Replace(schedulesFormating, "  /", " /", -1)
+	schedules := strings.Split(schedulesFormating, " / ")
 
 	var weeklySchedules []WeeklySchedule
 
