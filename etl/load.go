@@ -1,6 +1,8 @@
 package etl
 
 import (
+	"log"
+
 	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
 )
 
@@ -13,19 +15,29 @@ func (etl *RestaurantETL) loadData(
 	formatedPurchases []restaurant.Purchase,
 ) {
 	// Create the restaurans 
-	etl.Stote.CreateManyRestaurant(formatedRestaurants)
+	if err := etl.Stote.CreateManyRestaurant(formatedRestaurants); err != nil {
+		log.Fatal(err);
+	}
 
 	// Create the menu
-	etl.Stote.CreateManyMenu(formatedMenus)
+	if err := etl.Stote.CreateManyMenu(formatedMenus); err != nil {
+		log.Fatal(err);
+	}
 
 	// Create the opening hours
-	etl.Stote.CreateManyOpeningHour(formatedOpeningHours)
+	if err := etl.Stote.CreateManyOpeningHour(formatedOpeningHours); err != nil {
+		log.Fatal(err);
+	}
 
 	// Create the users
-	etl.Stote.CreateManyUser(formatedUsers)
+	if err := etl.Stote.CreateManyUser(formatedUsers); err != nil {
+		log.Fatal(err);
+	}
 
 	// Create the formatedPurchases
-	etl.Stote.CreateManyPurchase(formatedPurchases)
+	if err := etl.Stote.CreateManyPurchase(formatedPurchases); err != nil {
+		log.Fatal(err);
+	}
 }
 
 

@@ -19,7 +19,6 @@ func (etl *RestaurantETL) transformData(restaurants []Restaurant, users []User) 
 	restaurantCount := 1
 	menuCount := 1
 	openingHourCount := 1
-	purchaseCount := 1
 
 	for _, restaurantVal := range restaurants {
 		formatedRestaurants = append(formatedRestaurants, restaurant.Restaurant{
@@ -84,15 +83,12 @@ func (etl *RestaurantETL) transformData(restaurants []Restaurant, users []User) 
 			}
 
 			formatedPurchases = append(formatedPurchases, restaurant.Purchase{
-				ID: purchaseCount,
 				TransactionAmount: purchase.TransactionAmount,
 				TransactionDate: parsedTime,
 				UserId: user.ID,
 				RestaurantId: restaurantId,
 				MenuId: menuId,
 			})
-
-			purchaseCount++
 		}
 	}
 

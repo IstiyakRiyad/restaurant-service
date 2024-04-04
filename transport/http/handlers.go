@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+	"context"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -17,7 +18,7 @@ type RestaurantService interface {
 	GetRestaurantById(int) (* restaurant.Restaurant, error)
 	SearchRestaurant(string) ([]restaurant.Restaurant, error)
 	SearchDish(string) ([]restaurant.Menu, error)
-	Purchase(int, int) error
+	Purchase(context.Context, int, int) error
 	GetUsers() ([]restaurant.User, error)
 	GetUserById(int) (restaurant.User, error)
 }

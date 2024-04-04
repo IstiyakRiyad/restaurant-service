@@ -1,6 +1,7 @@
 package restaurant
 
 import (
+	"context"
 	"time"
 )
 
@@ -11,6 +12,7 @@ type RestaurantStore interface {
 	GetRestaurantById(int) (*Restaurant, error)
 	SearchRestaurant(string) ([]Restaurant, error)
 	SearchDish(string) ([]Menu, error)
+	CreatePurchase(context.Context, int, int) error
 }
 
 type RestaurantService struct {
@@ -40,7 +42,7 @@ func (rs *RestaurantService) GetRestaurantsByDate(dateTime time.Time) ([]Restaur
 
 	restaurants, err := rs.Store.GetRestaurantsByDate(week, timeUnix)
 	if err != nil {
-		return restaurants, nil
+		return restaurants, err
 	}
 
 	return restaurants, nil
@@ -50,7 +52,7 @@ func (rs *RestaurantService) GetRestaurants(query RestaurantQuery) ([]Restaurant
 	if query.BaseType == "more" {
 		restaurants, err := rs.Store.GetRestaurantsMoreThan(query.Limit, query.BaseCount, query.BaseType, query.MinPrice, query.MaxPrice)
 		if err != nil {
-			return restaurants, nil
+			return restaurants, err
 		}
 
 		return restaurants, nil
@@ -58,7 +60,7 @@ func (rs *RestaurantService) GetRestaurants(query RestaurantQuery) ([]Restaurant
 
 	restaurants, err := rs.Store.GetRestaurantsLessThan(query.Limit, query.BaseCount, query.BaseType, query.MinPrice, query.MaxPrice)
 	if err != nil {
-		return restaurants, nil
+		return restaurants, err
 	}
 
 	return restaurants, nil
@@ -67,7 +69,7 @@ func (rs *RestaurantService) GetRestaurants(query RestaurantQuery) ([]Restaurant
 func (rs *RestaurantService) GetRestaurantById(id int) (*Restaurant, error){
 	restaurant, err := rs.Store.GetRestaurantById(id)
 	if err != nil {
-		return restaurant, nil
+		return restaurant, err
 	}
 
 	return restaurant, nil
@@ -76,7 +78,7 @@ func (rs *RestaurantService) GetRestaurantById(id int) (*Restaurant, error){
 func (rs *RestaurantService) SearchRestaurant(searchQuery string) ([]Restaurant, error){
 	restaurants, err := rs.Store.SearchRestaurant(searchQuery)
 	if err != nil {
-		return restaurants, nil
+		return restaurants, err
 	}
 
 	return restaurants, nil
@@ -85,13 +87,17 @@ func (rs *RestaurantService) SearchRestaurant(searchQuery string) ([]Restaurant,
 func (rs *RestaurantService) SearchDish(searchQuery string) ([]Menu, error){
 	dishes, err := rs.Store.SearchDish(searchQuery)
 	if err != nil {
-		return dishes, nil
+		return dishes, err
 	}
 
 	return dishes, nil
 }
 
-func (rs *RestaurantService) Purchase(userId int, dishId int) error{
+func (rs *RestaurantService) Purchase(ctx context.Context, userId int, dishId int) error{
+	if err := rs.Store.CreatePurchase(ctx, userId, dishId); err != nil {
+		return err
+	}
+
 	return nil
 }
 
