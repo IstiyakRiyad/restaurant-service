@@ -2,6 +2,8 @@ package db
 
 import (
 	"fmt"
+	"context"
+	"database/sql"
 
 	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
 )
@@ -36,3 +38,47 @@ func (db *DataBase) CreateManyUser(users []restaurant.User) error {
 
 	return nil
 }
+
+
+func (db *DataBase) GetUserById(ctx context.Context, id int) (*restaurant.User, error) {
+	sqlCommand := `select id, name, cash_balance from users 
+		where id = $1;` 
+
+	var user restaurant.User;
+	if err := db.Client.QueryRowContext(ctx, sqlCommand, id).Scan(&user.ID, &user.Name, &user.CashBalance); err != nil {
+		if err == sql.ErrNoRows {
+            return &user, nil
+        }
+        return &user, err
+	}
+
+	return &user, nil
+}
+
+func (db *DataBase) GetUsers(ctx context.Context) ([]restaurant.User, error) {
+	sqlCommand := `select * from users` 
+	
+	rows, err := db.Client.QueryContext(ctx, sqlCommand) 
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+	users := []restaurant.User{}
+
+    for rows.Next() {
+        var user restaurant.User;
+
+        if err := rows.Scan(&user.ID, &user.Name, &user.CashBalance); err != nil {
+            return users, err
+        }
+
+        users = append(users, user)
+    }
+    if err = rows.Err(); err != nil {
+        return users, err
+    }
+
+    return users, nil
+}
+

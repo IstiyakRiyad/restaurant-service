@@ -13,6 +13,8 @@ type RestaurantStore interface {
 	SearchRestaurant(context.Context, string) ([]Restaurant, error)
 	SearchDish(context.Context, string) ([]Menu, error)
 	CreatePurchase(context.Context, int, int) error
+	GetUsers(context.Context) ([]User, error)
+	GetUserById(context.Context, int) (*User, error)
 }
 
 type RestaurantService struct {
@@ -101,12 +103,22 @@ func (rs *RestaurantService) Purchase(ctx context.Context, userId int, dishId in
 	return nil
 }
 
-func (rs *RestaurantService) GetUsers(ctx context.Context, ) ([]User, error){
-	return []User{}, nil
+func (rs *RestaurantService) GetUsers(ctx context.Context) ([]User, error){
+	users, err := rs.Store.GetUsers(ctx)
+	if err != nil {
+		return users, err
+	}
+
+	return users, nil
 }
 
-func (rs *RestaurantService) GetUserById(ctx context.Context, id int) (User, error){
-	return User{}, nil
+func (rs *RestaurantService) GetUserById(ctx context.Context, id int) (*User, error){
+	user, err := rs.Store.GetUserById(ctx, id)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }
 
 

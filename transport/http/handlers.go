@@ -20,7 +20,7 @@ type RestaurantService interface {
 	SearchDish(context.Context, string) ([]restaurant.Menu, error)
 	Purchase(context.Context, int, int) error
 	GetUsers(context.Context) ([]restaurant.User, error)
-	GetUserById(context.Context, int) (restaurant.User, error)
+	GetUserById(context.Context, int) (*restaurant.User, error)
 }
 
 type Handler struct {
