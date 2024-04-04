@@ -16,7 +16,7 @@ type RestaurantDateQuery struct {
 
 type SearchQuery struct {
 	SearchQuery	string	`form:"search_query,default="`
-	SearchType string	`form:"search_type,default=restaurant"`
+	SearchType	string	`form:"search_type,default=restaurant"`
 }
 
 func (h *Handler) GetRestaurants(ctx *gin.Context) {
@@ -137,7 +137,7 @@ func (h *Handler) Search(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusUnprocessableEntity, gin.H{
-		"message": "invalid search type",
+		"message": "invalid search type. Available types: `restaurant`, `dish`",
 	})
 }
 

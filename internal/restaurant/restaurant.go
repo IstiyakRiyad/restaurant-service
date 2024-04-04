@@ -9,6 +9,8 @@ type RestaurantStore interface {
 	GetRestaurantsLessThan(int, int, string, float64, float64) ([]Restaurant, error)
 	GetRestaurantsMoreThan(int, int, string, float64, float64) ([]Restaurant, error)
 	GetRestaurantById(int) (*Restaurant, error)
+	SearchRestaurant(string) ([]Restaurant, error)
+	SearchDish(string) ([]Menu, error)
 }
 
 type RestaurantService struct {
@@ -72,13 +74,21 @@ func (rs *RestaurantService) GetRestaurantById(id int) (*Restaurant, error){
 }
 
 func (rs *RestaurantService) SearchRestaurant(searchQuery string) ([]Restaurant, error){
+	restaurants, err := rs.Store.SearchRestaurant(searchQuery)
+	if err != nil {
+		return restaurants, nil
+	}
 
-	return []Restaurant{}, nil
+	return restaurants, nil
 }
 
 func (rs *RestaurantService) SearchDish(searchQuery string) ([]Menu, error){
-	return []Menu{}, nil
+	dishes, err := rs.Store.SearchDish(searchQuery)
+	if err != nil {
+		return dishes, nil
+	}
 
+	return dishes, nil
 }
 
 func (rs *RestaurantService) Purchase(userId int, dishId int) error{
