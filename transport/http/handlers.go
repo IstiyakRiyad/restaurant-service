@@ -14,7 +14,7 @@ import (
 type RestaurantService interface {
 	GetRestaurantsByDate(time.Time) ([]restaurant.Restaurant, error)
 	GetRestaurants(restaurant.RestaurantQuery) ([]restaurant.Restaurant, error)
-	GetRestaurantById(int) ([]restaurant.Restaurant, error)
+	GetRestaurantById(int) (* restaurant.Restaurant, error)
 	SearchRestaurant(string) ([]restaurant.Restaurant, error)
 	SearchDish(string) ([]restaurant.Menu, error)
 	Purchase(int, int) error
@@ -61,7 +61,7 @@ func (h *Handler) Serve() error {
 
 
 func (h *Handler) mapRoute() {
-	v1 := h.Router.Group("/api/v1/")
+	v1 := h.Router.Group("/api/v1")
 
 	// Restaurant Group
 	restaurantGroup := v1.Group("/restaurant")
@@ -80,8 +80,7 @@ func (h *Handler) mapRoute() {
 
 	// Sesarch
 	searchGroup := v1.Group("/search")
-	searchGroup.GET("/restaurant", h.SearchRestaurant)
-	searchGroup.GET("/dish", h.SearchDish)
+	searchGroup.GET("/", h.Search)
 
 	// Not Found
 	h.Router.NoRoute(func(ctx *gin.Context) {

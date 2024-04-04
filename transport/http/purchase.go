@@ -22,6 +22,7 @@ func (h *Handler) Purchase(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{

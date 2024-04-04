@@ -15,6 +15,7 @@ func (h *Handler) GetUsers(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -28,8 +29,9 @@ func (h *Handler) GetUserById(ctx *gin.Context) {
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
-			"message": "Restaurant not found",
+			"message": "User not found",
 		})
+		return
 	}
 
 	user, err := h.Service.GetUserById(idInt)
@@ -37,6 +39,7 @@ func (h *Handler) GetUserById(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{

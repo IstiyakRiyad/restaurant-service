@@ -5,6 +5,10 @@ import (
 )
 
 type RestaurantStore interface {
+	GetRestaurantsByDate(string, time.Time) ([]Restaurant, error)
+	GetRestaurantsLessThan(int, int, string, float64, float64) ([]Restaurant, error)
+	GetRestaurantsMoreThan(int, int, string, float64, float64) ([]Restaurant, error)
+	GetRestaurantById(int) (*Restaurant, error)
 }
 
 type RestaurantService struct {
@@ -28,18 +32,47 @@ func NewRestaurantService(store RestaurantStore) *RestaurantService {
 }
 
 func (rs *RestaurantService) GetRestaurantsByDate(dateTime time.Time) ([]Restaurant, error){
-	return []Restaurant{}, nil
+
+	week := dateTime.Weekday().String()
+	timeUnix := time.Date(1970, 1, 1, dateTime.Hour(), dateTime.Minute(), dateTime.Second(), dateTime.Nanosecond(), dateTime.Location())
+
+	restaurants, err := rs.Store.GetRestaurantsByDate(week, timeUnix)
+	if err != nil {
+		return restaurants, nil
+	}
+
+	return restaurants, nil
 }
 
 func (rs *RestaurantService) GetRestaurants(query RestaurantQuery) ([]Restaurant, error){
-	return []Restaurant{}, nil
+	if query.BaseType == "more" {
+		restaurants, err := rs.Store.GetRestaurantsMoreThan(query.Limit, query.BaseCount, query.BaseType, query.MinPrice, query.MaxPrice)
+		if err != nil {
+			return restaurants, nil
+		}
+
+		return restaurants, nil
+	} 
+
+	restaurants, err := rs.Store.GetRestaurantsLessThan(query.Limit, query.BaseCount, query.BaseType, query.MinPrice, query.MaxPrice)
+	if err != nil {
+		return restaurants, nil
+	}
+
+	return restaurants, nil
 }
 
-func (rs *RestaurantService) GetRestaurantById(id int) ([]Restaurant, error){
-	return []Restaurant{}, nil
+func (rs *RestaurantService) GetRestaurantById(id int) (*Restaurant, error){
+	restaurant, err := rs.Store.GetRestaurantById(id)
+	if err != nil {
+		return restaurant, nil
+	}
+
+	return restaurant, nil
 }
 
 func (rs *RestaurantService) SearchRestaurant(searchQuery string) ([]Restaurant, error){
+
 	return []Restaurant{}, nil
 }
 

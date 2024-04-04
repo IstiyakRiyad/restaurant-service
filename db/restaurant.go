@@ -1,7 +1,9 @@
 package db
 
 import (
+	"database/sql"
 	"fmt"
+	"time"
 
 	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
 )
@@ -98,4 +100,116 @@ func (db *DataBase) CreateManyOpeningHour(openingHours []restaurant.OpeningHour)
 
 	return nil
 }
+
+func (db *DataBase) GetRestaurantsByDate(week string, timeUnix time.Time) ([]restaurant.Restaurant, error) {
+	sqlCommand := `select restaurants.* from opening_hours join restaurants 
+					on restaurants.id = opening_hours.restaurant_id
+					where opening_hours.day = $1 and $2 between opening_hours.start_time and opening_hours.end_time` 
+	
+	
+	rows, err := db.Client.Query(sqlCommand, week, timeUnix) 
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+	restaurants := []restaurant.Restaurant{}
+
+    for rows.Next() {
+        var restaurant restaurant.Restaurant;
+
+        if err := rows.Scan(&restaurant.ID, &restaurant.Name, &restaurant.CashBalance); err != nil {
+            return restaurants, err
+        }
+
+        restaurants = append(restaurants, restaurant)
+    }
+    if err = rows.Err(); err != nil {
+        return restaurants, err
+    }
+
+    return restaurants, nil
+}
+
+func (db *DataBase) GetRestaurantsMoreThan(limit, baseCount int, baseType string, minPrice, maxPrice float64) ([]restaurant.Restaurant, error) {
+	sqlCommand := `select id, name, cash_balance from (select count(*) as no_of_menus, restaurant_id from menus 
+					where price between $1 and $2 group by restaurant_id) as cout_table 
+					join restaurants on restaurants.id = cout_table.restaurant_id
+					where no_of_menus > $3 order by restaurants.name limit $4;` 
+
+	rows, err := db.Client.Query(sqlCommand, minPrice, maxPrice, baseCount, limit) 
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+	restaurants := []restaurant.Restaurant{}
+
+    for rows.Next() {
+        var restaurant restaurant.Restaurant;
+
+        if err := rows.Scan(&restaurant.ID, &restaurant.Name, &restaurant.CashBalance); err != nil {
+            return restaurants, err
+        }
+
+        restaurants = append(restaurants, restaurant)
+    }
+    if err = rows.Err(); err != nil {
+        return restaurants, err
+    }
+
+    return restaurants, nil
+}
+
+func (db *DataBase) GetRestaurantsLessThan(limit, baseCount int, baseType string, minPrice, maxPrice float64) ([]restaurant.Restaurant, error) {
+	sqlCommand := `select id, name, cash_balance from (select count(*) as no_of_menus, restaurant_id from menus 
+			where price between $1 and $2 group by restaurant_id) as cout_table 
+			join restaurants on restaurants.id = cout_table.restaurant_id
+			where no_of_menus < $3 order by restaurants.name limit $4;` 
+
+	rows, err := db.Client.Query(sqlCommand, minPrice, maxPrice, baseCount, limit) 
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+	restaurants := []restaurant.Restaurant{}
+
+    for rows.Next() {
+        var restaurant restaurant.Restaurant;
+
+        if err := rows.Scan(&restaurant.ID, &restaurant.Name, &restaurant.CashBalance); err != nil {
+            return restaurants, err
+        }
+
+        restaurants = append(restaurants, restaurant)
+    }
+    if err = rows.Err(); err != nil {
+        return restaurants, err
+    }
+
+    return restaurants, nil
+}
+
+func (db *DataBase) GetRestaurantById(id int) (*restaurant.Restaurant, error) {
+	sqlCommand := `select id, name, cash_balance from restaurants 
+		where restaurants.id = $1;` 
+
+	var restaurant restaurant.Restaurant;
+	if err := db.Client.QueryRow(sqlCommand, id).Scan(&restaurant.ID, &restaurant.Name, &restaurant.CashBalance); err != nil {
+		if err == sql.ErrNoRows {
+            return &restaurant, nil
+        }
+        return &restaurant, err
+	}
+
+	return &restaurant, nil
+}
+
+
+
+
+
+
+
 

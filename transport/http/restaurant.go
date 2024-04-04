@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -15,6 +16,7 @@ type RestaurantDateQuery struct {
 
 type SearchQuery struct {
 	SearchQuery	string	`form:"search_query,default="`
+	SearchType string	`form:"search_type,default=restaurant"`
 }
 
 func (h *Handler) GetRestaurants(ctx *gin.Context) {
@@ -29,6 +31,7 @@ func (h *Handler) GetRestaurants(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -49,6 +52,7 @@ func (h *Handler) GetRestaurantsByDate(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -58,12 +62,14 @@ func (h *Handler) GetRestaurantsByDate(ctx *gin.Context) {
 }
 
 func (h *Handler) GetRestaurantById(ctx *gin.Context) {
+	fmt.Println("Hello" , ctx.Param("id"))
 	id := ctx.Param("id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"message": "Restaurant not found",
 		})
+		return
 	}
 
 	restaurant, err := h.Service.GetRestaurantById(idInt)
@@ -71,12 +77,14 @@ func (h *Handler) GetRestaurantById(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})
+		return
 	}
 
 	if restaurant == nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"message": "Restaurant not found",
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -85,43 +93,51 @@ func (h *Handler) GetRestaurantById(ctx *gin.Context) {
 	})
 }
 
-func (h *Handler) SearchRestaurant(ctx *gin.Context) {
+func (h *Handler) Search(ctx *gin.Context) {
 	var query SearchQuery
 	if err := ctx.ShouldBindQuery(&query); err != nil {
         ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
         return
     }
 
-	restaurants, err := h.Service.SearchRestaurant(query.SearchQuery)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err,
+	if query.SearchType == "restaurant" {
+		search, err := h.Service.SearchRestaurant(query.SearchQuery)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+				"error": err,
+			})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{
+			"message": "List of restaurants",
+			"data": map[string]any{
+				"type": query.SearchType,
+				"items": search,
+			},
 		})
+		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "List of restaurants",
-		"data": restaurants,
-	})
-}
-
-func (h *Handler) SearchDish(ctx *gin.Context) {
-	var query SearchQuery
-	if err := ctx.ShouldBindQuery(&query); err != nil {
-        ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
-        return
-    }
-
-	dishes, err := h.Service.SearchDish(query.SearchQuery)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err,
+	if query.SearchType == "dish" {
+		search, err := h.Service.SearchDish(query.SearchQuery)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+				"error": err,
+			})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{
+			"message": "List of dishes",
+			"data": map[string]any{
+				"type": query.SearchType,
+				"items": search,
+			},
 		})
+		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "List of dishes",
-		"data": dishes,
+	ctx.JSON(http.StatusUnprocessableEntity, gin.H{
+		"message": "invalid search type",
 	})
 }
 
