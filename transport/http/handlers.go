@@ -13,14 +13,14 @@ import (
 
 
 type RestaurantService interface {
-	GetRestaurantsByDate(time.Time) ([]restaurant.Restaurant, error)
-	GetRestaurants(restaurant.RestaurantQuery) ([]restaurant.Restaurant, error)
-	GetRestaurantById(int) (* restaurant.Restaurant, error)
-	SearchRestaurant(string) ([]restaurant.Restaurant, error)
-	SearchDish(string) ([]restaurant.Menu, error)
+	GetRestaurantsByDate(context.Context, time.Time) ([]restaurant.Restaurant, error)
+	GetRestaurants(context.Context, restaurant.RestaurantQuery) ([]restaurant.Restaurant, error)
+	GetRestaurantById(context.Context, int) (* restaurant.Restaurant, error)
+	SearchRestaurant(context.Context, string) ([]restaurant.Restaurant, error)
+	SearchDish(context.Context, string) ([]restaurant.Menu, error)
 	Purchase(context.Context, int, int) error
-	GetUsers() ([]restaurant.User, error)
-	GetUserById(int) (restaurant.User, error)
+	GetUsers(context.Context) ([]restaurant.User, error)
+	GetUserById(context.Context, int) (restaurant.User, error)
 }
 
 type Handler struct {

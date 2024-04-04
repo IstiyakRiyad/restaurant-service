@@ -18,7 +18,7 @@ func (h *Handler) Purchase(ctx *gin.Context) {
         return
     }
 
-	if err := h.Service.Purchase(ctx.Request.Context(),body.UserId, body.DiashId); err != nil {
+	if err := h.Service.Purchase(ctx.Request.Context(), body.UserId, body.DiashId); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})

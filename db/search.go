@@ -1,13 +1,14 @@
 package db
 
 import (
+	"context"
 	"fmt"
 
 	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
 )
 
 
-func (db *DataBase) SearchRestaurant(searchQuery string) ([]restaurant.Restaurant, error) {
+func (db *DataBase) SearchRestaurant(ctx context.Context, searchQuery string) ([]restaurant.Restaurant, error) {
 	sqlCommand := `select id, name, cash_balance,
 				ts_rank(to_tsvector('english', name), websearch_to_tsquery($1)) as rank
 				from restaurants
@@ -40,7 +41,7 @@ func (db *DataBase) SearchRestaurant(searchQuery string) ([]restaurant.Restauran
     return restaurants, nil
 }
 
-func (db *DataBase) SearchDish(searchQuery string) ([]restaurant.Menu, error) {
+func (db *DataBase) SearchDish(ctx context.Context, searchQuery string) ([]restaurant.Menu, error) {
 	sqlCommand := `select id, name, price, restaurant_id, 
 				ts_rank(to_tsvector('english', name), websearch_to_tsquery($1)) as rank
 				from menus

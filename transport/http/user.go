@@ -10,7 +10,7 @@ import (
 
 
 func (h *Handler) GetUsers(ctx *gin.Context) {
-	users, err := h.Service.GetUsers()
+	users, err := h.Service.GetUsers(ctx.Request.Context())
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
@@ -34,7 +34,7 @@ func (h *Handler) GetUserById(ctx *gin.Context) {
 		return
 	}
 
-	user, err := h.Service.GetUserById(idInt)
+	user, err := h.Service.GetUserById(ctx.Request.Context(), idInt)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,

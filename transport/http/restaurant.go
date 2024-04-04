@@ -26,7 +26,7 @@ func (h *Handler) GetRestaurants(ctx *gin.Context) {
         return
     }
 
-	restaurants, err := h.Service.GetRestaurants(query)
+	restaurants, err := h.Service.GetRestaurants(ctx.Request.Context(), query)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
@@ -47,7 +47,7 @@ func (h *Handler) GetRestaurantsByDate(ctx *gin.Context) {
         return
     }
 
-	restaurants, err := h.Service.GetRestaurantsByDate(query.DateTime)
+	restaurants, err := h.Service.GetRestaurantsByDate(ctx.Request.Context(), query.DateTime)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
@@ -72,7 +72,7 @@ func (h *Handler) GetRestaurantById(ctx *gin.Context) {
 		return
 	}
 
-	restaurant, err := h.Service.GetRestaurantById(idInt)
+	restaurant, err := h.Service.GetRestaurantById(ctx.Request.Context(), idInt)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
@@ -101,7 +101,7 @@ func (h *Handler) Search(ctx *gin.Context) {
     }
 
 	if query.SearchType == "restaurant" {
-		search, err := h.Service.SearchRestaurant(query.SearchQuery)
+		search, err := h.Service.SearchRestaurant(ctx.Request.Context(), query.SearchQuery)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"error": err,
@@ -119,7 +119,7 @@ func (h *Handler) Search(ctx *gin.Context) {
 	}
 
 	if query.SearchType == "dish" {
-		search, err := h.Service.SearchDish(query.SearchQuery)
+		search, err := h.Service.SearchDish(ctx.Request.Context(), query.SearchQuery)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"error": err,
