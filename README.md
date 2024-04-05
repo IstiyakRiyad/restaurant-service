@@ -98,4 +98,12 @@ docker exec restaurant restaurant etl --config /app/prod.env
 ## Project Structure:
 
 * `etl` - code for etl(encoding/jsonextract, transform and load) the given data.
-
+* `db`  - database connect & database query files
+* `cmd` - Different command line code.
+* `migrations` - Migration sql files
+* `transport` - HTTP connection functionality code
+* `internal` - Core logic of the application
+* `utils` - Different helper functions
+* `bin` - Binary executable files
+* `restaurantData` - Given json files(restaurant & user data)
+___
