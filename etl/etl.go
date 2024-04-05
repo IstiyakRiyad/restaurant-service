@@ -1,6 +1,7 @@
 package etl
 
 import (
+	"github.com/spf13/viper"
 	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
 )
 
@@ -21,8 +22,8 @@ type RestaurantETL struct {
 func NewETL(store StoreETL) *RestaurantETL {
 	return &RestaurantETL{
 		Stote: store,
-		restaurantFile: "restaurantData/restaurant_with_menu.json",
-		userFile: "restaurantData/users_with_purchase_history.json",
+		restaurantFile: viper.GetString("RESTAURANT_FILE"),
+		userFile: viper.GetString("USER_FILE"),
 	}
 }
 

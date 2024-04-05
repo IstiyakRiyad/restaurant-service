@@ -1,0 +1,32 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    restart: always
+    volumes:
+      - restaurantData:/var/lib/postgresql/data
+    networks:
+      - restaurantBridge
+      
+  server:
+    build: .
+    image: pathao/restaurant
+    container_name: restaurant
+    depends_on:
+      - postgres
+    ports:
+      - 5000:5000
+    volumes:
+      - ./.env:/app/prod.env
+    networks:
+      - restaurantBridge
+
+volumes:
+  restaurantData: {}
+
+networks:
+  restaurantBridge:
+    driver: bridge

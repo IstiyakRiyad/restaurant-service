@@ -35,7 +35,7 @@ func NewHandler(service RestaurantService) *Handler {
 		Service: service,
 	}
 
-	// gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 	hander.Router = gin.Default()
 	hander.mapRoute()
 
@@ -53,6 +53,7 @@ func NewHandler(service RestaurantService) *Handler {
 
 
 func (h *Handler) Serve() error {
+	fmt.Println("Server is starting")
 	if err := h.Server.ListenAndServe(); err != nil {
 		return err
 	}
