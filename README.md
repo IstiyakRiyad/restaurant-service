@@ -21,13 +21,16 @@ cd technical-assessment-pathao
 ```
 
 ### Menual Build Process:
-
+Please put local db config to the .env & the migrations location on .env file(`MIGRATION_FILE_URL="file:///$PROJECT_DIR/migrations"`). 
 ``` bash
 # Install dependencies:
 go mod download
 
 # Build the Project
 go build -o bin/restaurant
+
+# Setup config file
+cp dev.env .env
 
 # Run migrations
 ./bin/restaurant migrate up --config .env
@@ -40,21 +43,20 @@ go build -o bin/restaurant
 ```
 
 ### Docker Process:
-<b>Build Image:</b> <br />
-First clone the repository then enter into the repository.
+<b>Build Image Manually:</b> <br />
+First clone the repository then enter into the repository. <br />
 To build the just the docker file run:
 ``` bash
 docker build -t pathao/restaurant .
 ```
 
-<b>Run Docker Image:</b><br />
-Here the docker image take `/app/prod.env` as config file by default. I used `--network host` because my database on the local machine.
+<b>Run Docker Image Manually:</b><br />
+Here the docker image take `/app/prod.env` as config file by default. I used `--network host` because my database on the local machine. Please put local db config to the .env & the migrations location on .env file (`MIGRATION_FILE_URL="file:///migrations"`).
 ``` bash
-docker run --rm -d -v ./dev.env:/app/prod.env --network host pathao/restaurant
+docker run --rm -d -v ./.env:/app/prod.env --network host pathao/restaurant
 ```
 
 <b>Run with Docker Compose:</b><br />
-Here the docker image take `/app/prod.env` as config file by default. I used `--network host` because my database on the local machine.
 ``` bash
 # copy docker.env to .env & modify
 cp docker.env .env
@@ -67,7 +69,7 @@ docker compose up -d
 ```
 
 <b>ETL(Extract, Transform and Load):</b> <br />
-
+If you don't load data to the database before then run following command.
 ``` bash
 docker exec restaurant restaurant etl --config /app/prod.env
 ```
