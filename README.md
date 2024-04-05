@@ -72,7 +72,30 @@ docker compose up -d
 docker exec restaurant restaurant etl --config /app/prod.env
 ```
 
+## API Documentations:
+* [README API DOCS](https://gitlab.com/IstiyakRiyad/technical-assessment-pathao/-/blob/main/docs/README.md)
+* [Insomnia Docs](https://gitlab.com/IstiyakRiyad/technical-assessment-pathao/-/blob/main/docs/Insomnia_docs.json)
+
+## Technology:
+
+### Golang Libraries:
+* `gin`
+* `cobra`
+* `viper`
+* `golang-migrate`
+* `pq`
+* `database/sql`
+* `context`
+* `encoding/json`
+
+## Tools
+* `nvim`
+* `air`
+* `Makefile`
+* `docker`
+* `docker compose`
+
 ## Project Structure:
 
-* `etl` - code for etl(extract, transform and load) the given data.
+* `etl` - code for etl(encoding/jsonextract, transform and load) the given data.
 
