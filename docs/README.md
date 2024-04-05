@@ -83,3 +83,77 @@ List top y restaurants that have more or less than x number of dishes within a p
 }
 ```
 ___
+
+### `GET` `/api/v1/search/`
+Search for restaurants or dishes by name, ranked by relevance to search term
+
+**Query Parameters**
+
+|          Name | Required |  Type   | Description                                                                      |
+| -------------:|:--------:|:-------:| -------------------------------------------------------------------------------- |
+| `search_query`| required | string |  String to search  |
+| `search_type`  | required | enum |  Type of search `restaurant` & `dish`  |
+
+
+**Response**
+
+```json
+{
+	"message": "List of dishes",
+	"data": {
+		"type": "dish",
+		"items": [
+			{
+				"ID": 2298,
+				"Name": "Steak haché",
+				"Price": 12.69,
+				"RestaurantId": 268
+			}
+		]
+	}
+}
+```
+
+```json
+{
+	"message": "List of restaurants",
+	"data": {
+		"type": "restaurant",
+		"items": [
+			{
+				"ID": 246,
+				"Name": "Bombay Indian Restaurant",
+				"CashBalance": 169.74
+			},
+			{
+				"ID": 1909,
+				"Name": "The Indian",
+				"CashBalance": 3426.41
+			}
+		]
+	}
+}
+```
+___
+
+### `POST` `/api/v1/purchase`
+Process a user purchasing a dish from a restaurant, handling all relevant data changes in an atomic transaction. Do watch out for potential race conditions that can arise from concurrent transactions!
+
+**Request Body**
+
+```json
+{
+	"userId": 1,
+	"dishId": 3
+}
+```
+
+**Response**
+
+```json
+{
+	"message": "Purchase is successfull"
+}
+```
+___
+
