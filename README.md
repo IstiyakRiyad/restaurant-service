@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Pathao Technical Assessment</h1>
   <p>
-    This is a simple text animation program. When you hover on the text it will be animated.
+    It is a restaurant backend server. Here I try to use Twelve-Factor App Methodology. 
   </p>
   <p>Submitted By: <a href="https://github.com/IstiyakRiyad" target="_blank">Md. Istiyak Hossain</a> </p>
 </div>
