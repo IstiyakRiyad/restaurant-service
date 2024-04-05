@@ -73,6 +73,11 @@ If you don't load data to the database before then run following command.
 ``` bash
 docker exec restaurant restaurant etl --config /app/prod.env
 ```
+<b>Testing:</b> <br />
+I have added some integration testing. 
+``` bash
+go test -cover ./...
+```
 
 ## API Documentations:
 * [README API DOCS](https://gitlab.com/IstiyakRiyad/technical-assessment-pathao/-/blob/main/docs/README.md)
@@ -89,6 +94,7 @@ docker exec restaurant restaurant etl --config /app/prod.env
 * `database/sql`
 * `context`
 * `encoding/json`
+* `stretchr/testify`
 
 ## Tools
 * `nvim`
