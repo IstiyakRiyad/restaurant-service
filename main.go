@@ -1,6 +1,6 @@
 package main
 
-import "gitlab.com/IstiyakRiyad/technical-assessment-pathao/cmd"
+import "github.com/IstiyakRiyad/restaurant-service/cmd"
 
 
 func main() {

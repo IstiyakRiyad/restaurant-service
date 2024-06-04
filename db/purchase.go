@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 func (db *DataBase) CreateManyPurchase(purchases []restaurant.Purchase) error {

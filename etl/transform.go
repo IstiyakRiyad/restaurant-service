@@ -3,8 +3,8 @@ package etl
 import (
 	"time"
 
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/utils"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/utils"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 

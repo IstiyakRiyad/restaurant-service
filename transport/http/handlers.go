@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 

@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/db"
+	"github.com/IstiyakRiyad/restaurant-service/db"
 )
 
 var migrateCmd = &cobra.Command{

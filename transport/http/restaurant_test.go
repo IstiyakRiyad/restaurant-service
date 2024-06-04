@@ -10,9 +10,9 @@ import (
 
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/db"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
-	transportHttp "gitlab.com/IstiyakRiyad/technical-assessment-pathao/transport/http"
+	"github.com/IstiyakRiyad/restaurant-service/db"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
+	transportHttp "github.com/IstiyakRiyad/restaurant-service/transport/http"
 )
 
 

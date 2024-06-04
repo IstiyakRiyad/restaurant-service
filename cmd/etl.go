@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/db"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/etl"
+	"github.com/IstiyakRiyad/restaurant-service/db"
+	"github.com/IstiyakRiyad/restaurant-service/etl"
 )
 
 var etlCmd = &cobra.Command{

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 

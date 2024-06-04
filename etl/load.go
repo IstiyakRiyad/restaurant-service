@@ -3,7 +3,7 @@ package etl
 import (
 	"log"
 
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 

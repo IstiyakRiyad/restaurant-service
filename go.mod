@@ -1,4 +1,4 @@
-module gitlab.com/IstiyakRiyad/technical-assessment-pathao
+module github.com/IstiyakRiyad/restaurant-service
 
 go 1.22.0
 

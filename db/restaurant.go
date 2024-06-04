@@ -6,7 +6,7 @@ import (
 	"time"
 	"context"
 
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 func (db *DataBase) CreateManyRestaurant(restaurants []restaurant.Restaurant) error {

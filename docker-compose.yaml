@@ -13,7 +13,7 @@ services:
       
   server:
     build: .
-    image: pathao/restaurant
+    image: istiyak/restaurant
     container_name: restaurant
     depends_on:
       - postgres

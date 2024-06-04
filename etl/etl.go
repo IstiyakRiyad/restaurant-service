@@ -2,7 +2,7 @@ package etl
 
 import (
 	"github.com/spf13/viper"
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 type StoreETL interface {

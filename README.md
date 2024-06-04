@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Pathao Technical Assessment</h1>
+  <h1>Restaurant Service</h1>
   <p>
     It is a restaurant backend server. Here I try to use Twelve-Factor App Methodology. 
   </p>
@@ -14,10 +14,10 @@ For manually build the server, install golang & postgresql locally. Setup the co
 
 ``` bash
 # Download repository:
-git clone https://gitlab.com/IstiyakRiyad/technical-assessment-pathao.git
+git clone https://github.com/IstiyakRiyad/restaurant-service.git
 
 # Go to parent directory:
-cd technical-assessment-pathao
+cd restaurant-service
 ```
 
 ### Menual Build Process:
@@ -47,13 +47,13 @@ cp dev.env .env
 First clone the repository then enter into the repository. <br />
 To build the just the docker file run:
 ``` bash
-docker build -t pathao/restaurant .
+docker build -t istiyak/restaurant .
 ```
 
 <b>Run Docker Image Manually:</b><br />
 Here the docker image take `/app/prod.env` as config file by default. I used `--network host` because my database on the local machine. Please put local db config to the .env & the migrations location on .env file (`MIGRATION_FILE_URL="file:///migrations"`).
 ``` bash
-docker run --rm -d -v ./.env:/app/prod.env --network host pathao/restaurant
+docker run --rm -d -v ./.env:/app/prod.env --network host istiyak/restaurant
 ```
 
 <b>Run with Docker Compose:</b><br />
@@ -80,8 +80,8 @@ go test -cover ./...
 ```
 
 ## API Documentations:
-* [README API DOCS](https://gitlab.com/IstiyakRiyad/technical-assessment-pathao/-/blob/main/docs/README.md)
-* [Insomnia Docs](https://gitlab.com/IstiyakRiyad/technical-assessment-pathao/-/blob/main/docs/Insomnia_docs.json)
+* [README API DOCS](https://github.com/IstiyakRiyad/restaurant-service/-/blob/main/docs/README.md)
+* [Insomnia Docs](https://github.com/IstiyakRiyad/restaurant-service/-/blob/main/docs/Insomnia_docs.json)
 
 ## Technology:
 

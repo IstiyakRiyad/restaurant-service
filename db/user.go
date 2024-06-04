@@ -5,7 +5,7 @@ import (
 	"context"
 	"database/sql"
 
-	"gitlab.com/IstiyakRiyad/technical-assessment-pathao/internal/restaurant"
+	"github.com/IstiyakRiyad/restaurant-service/internal/restaurant"
 )
 
 func (db *DataBase) CreateManyUser(users []restaurant.User) error {

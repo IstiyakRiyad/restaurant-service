@@ -1,6 +1,6 @@
 # API endpoints
 
-Here the endpoints of the pathao technical assessment
+Here the endpoints of the restaurant service
 
 ## GET
 `1. Restaurant at certain time` [/api/v1/restaurant/datetime](#) <br/>
